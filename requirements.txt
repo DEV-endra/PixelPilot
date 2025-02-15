@@ -1,0 +1,8 @@
+mss
+pydirectinput
+opencv-python-headless
+numpy
+pytesseract
+matplotlib
+gymnasium
+Pillow
