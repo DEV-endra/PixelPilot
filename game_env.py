@@ -10,7 +10,7 @@ from gymnasium import Env
 from PIL import Image
 from gym.spaces import Box, Discrete
 
-def preprocessing(image):               #for image preprocessing in order to detect when the game ends
+def preprocessing(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     # Increase contrast and sharpness
@@ -24,32 +24,45 @@ def preprocessing(image):               #for image preprocessing in order to det
             cv2.THRESH_BINARY_INV, 
             15, 8
         )
+
     # Morphological operations
     kernel = np.ones((3,3), np.uint8)
     dilated = cv2.dilate(thresh, kernel, iterations=2)
     eroded = cv2.erode(dilated, kernel, iterations=1)
-  
     return eroded
 
+def press(delay, key):
+    pydirectinput.keyDown(key)
+    time.sleep(delay)
+    pydirectinput.keyUp(key)
+    
 class WebGame(Env):
     def __init__(self):      # Setting up the environment and observation spaces
         super().__init__()   # for using the base class of gym
         
         self.observation_space = spaces.Box(low=0, high=255, shape=(1,83,100), dtype=np.uint8)
-        self.action_space = spaces.Discrete(3)
+        self.action_space = spaces.Discrete(5)
         # Capture game frames
         self.cap = mss()
         self.game_location = {'top': 250, 'left': 650, 'width': 650, 'height':700}
-        self.done_location = {'top':450, 'left': 600, 'width': 580, 'height':90}
-        
+        self.done_location = {'top':450, 'left': 500, 'width': 380, 'height':90}
     def step(self, action):
         action_map = { 
-            0:'left',
-            1: 'right', 
-            2: 'no_op'
+            0:'small_left',
+            1: 'large_left', 
+            2: 'small_right',
+            3: 'large_right',
+            4: 'no_op'
         }
-        if action !=2: 
-            pydirectinput.press(action_map[action])
+        if action !=4:
+            if(action==0):
+                press(0.0000001,'left')
+            elif(action==1):
+                press(0.5,'left')
+            elif(action==2):
+                press(0.0000001,'right')
+            else:
+                press(0.5,'right')
 
         done, done_cap = self.get_done()   
         observation = self.get_observation()
