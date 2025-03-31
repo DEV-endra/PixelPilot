@@ -55,6 +55,5 @@ pip install mss pydirectinput pytesseract
 | **pytesseract**             | Provides Optical Character Recognition (OCR) capabilities using Tesseract. |
 
 
-###################################################### RESULTS #############################################################
 https://github.com/user-attachments/assets/75a69d4e-5b5f-408b-a781-5cdf980a3148
 
