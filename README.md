@@ -1,58 +1,62 @@
-# PixelPilot
-Creating an AI agent that autonomously learns to play games using deep reinforcement learning with Stable Baselines and Gymnasium
+# PixelPilot - AI Game Agent
 
+PixelPilot is an AI-driven game agent designed to play a Car game ( [Fast Endless Police Car Chase](https://apps.microsoft.com/detail/9N7LW214VLR3?hl=en-us&gl=IN&ocid=pdpshare) )where the objective is to avoid police cars, collect cash, and avoid colliding with obstacles like stones. The agent is trained using reinforcement learning techniques with a Convolutional Neural Network (CNN) and Stable Baselines.
 
-## Prerequisites  
-This project requires **Tesseract-OCR** to be installed on your system, as `pytesseract` is just a wrapper for it.  
+## Features
+- **Reinforcement Learning**: Utilizes a PPO (Proximal Policy Optimization) algorithm and DQN(Deep Q-Networks).
+- **Computer Vision**: Uses OpenCV and MSS for screen capturing and processing.
+- **Text Recognition**: Implements PyTesseract for reading in-game information.
+- **Custom Reward Function**: The agent is optimized to maximize game rewards based on strategic actions.
+- **Gymnasium Integration**: The training environment follows the Gymnasium framework for RL training.
 
-### Installation Instructions:  
-- **Windows:**  
-  Download the installer from [Tesseract GitHub](https://github.com/ub-mannheim/tesseract/wiki) and add the installation path (e.g., `C:\Program Files\Tesseract-OCR`) to your system's PATH environment variable.  
+## Reward Function Design
+The current reward system is:
+- +2 for every frame survived (1 frame ~ 1 second)
+- +10 for collecting cash 
+- -100 for colliding with stones 
+- -10 for hitting a police car 
 
-c 
-    ```bash
-    sudo apt update
-    sudo apt install tesseract-ocr
-    ```
+## Setup Instructions
+### Prerequisites
+Ensure you have the following installed:
+- Python 3.8+
+- OpenCV
+- NumPy
+- MSS
+- PyTesseract
+- Gymnasium
+- Stable Baselines3
 
-- **macOS (using Homebrew):**  
-    ```bash
-    brew install tesseract
-    ```
-After installing, verify by running:  
+### Installation
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/your-repo/pixelpilot.git
+   cd pixelpilot
+   ```
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+## Running the Agent
+To start training:
 ```bash
-tesseract --version
+python train.py
 ```
 
-- **Python Dependencies Installation**
-Ensure you have Python installed (recommended: Python 3.7+). You can check your version with:
+To test the trained model:
 ```bash
-python --version
+python play.py --model models/pixelpilot_model.zip
 ```
 
-- **(Optional) Create a Virtual Environment**
-It is recommended to create a virtual environment before installing dependencies:
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows, use: venv\Scripts\activate
-```
+## Known Issues
+- Further tuning is required to balance reward functions for better decision-making.
 
-- **Install Required Packages**
-Run the following commands to install the necessary dependencies:
-```bash
-pip install stable-baselines3[extra] protobuf==3.20.*
-pip install mss pydirectinput pytesseract
-```
-
-### **Package Descriptions**  
-
-| Package                     | Description |
-|-----------------------------|------------|
-| **stable-baselines3[extra]** | Reinforcement learning framework with additional dependencies. |
-| **protobuf==3.20.***        | Ensures compatibility with libraries requiring older protobuf versions. |
-| **mss**                     | Captures screen images efficiently for real-time processing. |
-| **pydirectinput**           | Allows simulating keyboard and mouse input in Windows environments. |
-| **pytesseract**             | Provides Optical Character Recognition (OCR) capabilities using Tesseract. |
+## Contributors
+- [Sriharshith](https://github.com/Sriharshith1863)
+- [Rana Bharath](https://github.com/ranabharath)
+- [Gnaneshwar](https://github.com/gnaneshwar-t)
+- [Devendra Chand](https://github.com/DEV-endra)
 
 
 https://github.com/user-attachments/assets/75a69d4e-5b5f-408b-a781-5cdf980a3148
